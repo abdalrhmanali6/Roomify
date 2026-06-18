@@ -14,6 +14,13 @@ import Checkout from "./pages/Checkout";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CheckoutFailed from "./pages/CheckoutFailed";
 import OurStory from "./pages/OurStory";
+import AdminLayout from "./layout/AdminLayout";
+import AdminRoute from "./features/admin/components/AdminRoute";
+import Dashboard from "./features/admin/pages/Dashboard";
+import Inventory from "./features/admin/pages/Inventory";
+import Orders from "./features/admin/pages/Orders";
+import Delivery from "./features/admin/pages/Delivery";
+import AnimatedAdminPages from "./features/admin/components/AnimatedAdminPages";
 function App() {
   const location = useLocation();
   const { checkAuth, isCheckingAuth } = useAuth();
@@ -88,24 +95,79 @@ function App() {
               </AnimationPage>
             }
           />
-          <Route path="checkout/cancel" element={
-            <AnimationPage>
-              <ProtectedRoute>
-                <CheckoutFailed />
-              </ProtectedRoute>
-            </AnimationPage>
-          } />
-          <Route path="story" element={
-            <AnimationPage>
-                <OurStory /> 
-            </AnimationPage>
-          } />
+          <Route
+            path="checkout/cancel"
+            element={
+              <AnimationPage>
+                <ProtectedRoute>
+                  <CheckoutFailed />
+                </ProtectedRoute>
+              </AnimationPage>
+            }
+          />
+          <Route
+            path="story"
+            element={
+              <AnimationPage>
+                <OurStory />
+              </AnimationPage>
+            }
+          />
           <Route
             path="*"
             element={
               <AnimationPage>
                 <Page404 />
               </AnimationPage>
+            }
+          />
+        </Route>
+        <Route
+          path="/admin"
+          element={
+              <AdminRoute>
+                <AdminLayout />
+              </AdminRoute>
+          }
+        >
+          <Route
+            index
+            element={
+              <AnimatedAdminPages>
+                <AdminRoute>
+                  <Dashboard />
+                </AdminRoute>
+              </AnimatedAdminPages>
+            }
+          />
+          <Route
+            path="inventory"
+            element={
+              <AnimatedAdminPages>
+                <AdminRoute>
+                  <Inventory />
+                </AdminRoute>
+              </AnimatedAdminPages>
+            }
+          />
+          <Route
+            path="orders"
+            element={
+              <AnimatedAdminPages>
+                <AdminRoute>
+                  <Orders />
+                </AdminRoute>
+              </AnimatedAdminPages>
+            }
+          />
+          <Route
+            path="delivery"
+            element={
+              <AnimatedAdminPages>
+                <AdminRoute>
+                  <Delivery />
+                </AdminRoute>
+              </AnimatedAdminPages>
             }
           />
         </Route>

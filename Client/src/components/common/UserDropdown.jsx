@@ -1,17 +1,14 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../store/authStore";
-import {  User } from "lucide-react";
 import {motion,AnimatePresence} from "framer-motion"
 import { useQueryClient } from "@tanstack/react-query";
 
-const UserDropdown = () => {
+const UserDropdown = ({children ,isOpen,setIsOpen,links,className}) => {
   
   const { user, logout } = useAuth();
   const queryClient = useQueryClient();
   
  
-   const [isOpen, setIsOpen] = useState(false);
  
    
    const handleLogout = () => {
@@ -22,16 +19,10 @@ const UserDropdown = () => {
 
   return (
     
-    <div className="relative">
+    <div className="relative mt-auto">
       
-       
-      <button 
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 focus:outline-none"
-      >
-        <User color="#825032"  className="cursor-pointer hover:-translate-y-1  transition-all duration-300 active:opacity-80"/>
-      </button>
-
+       {children}
+      
       <AnimatePresence>
 
         {isOpen && (
@@ -39,7 +30,7 @@ const UserDropdown = () => {
         animate={{ opacity: 1, y: 0 }}   
         exit={{ opacity: 0, y: -10 }}
         transition={{duration:0.25}}
-        className="absolute right-0 mt-3 w-56 bg-white rounded-xl shadow-lg border border-gray-100 z-50 overflow-hidden">
+        className={`absolute ${className} w-56 bg-white rounded-xl shadow-lg border border-gray-100 z-50 overflow-hidden`}>
             
             
             <div className="px-4 py-3 bg-brand-surface/30 border-b border-gray-100">
@@ -49,20 +40,18 @@ const UserDropdown = () => {
 
             
             <div className="py-1">
-              <Link 
-                to="/profile" 
-                onClick={() => setIsOpen(false)}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-brand-surface hover:text-brand-brown transition-colors"
-              >
-                My Profile
-              </Link>
-              <Link 
-                to="/orders" 
-                onClick={() => setIsOpen(false)}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-brand-surface hover:text-brand-brown transition-colors"
-              >
-                My Orders
-              </Link>
+              {
+                links.map((link)=>(
+                <Link 
+                  to={link.to} 
+                  onClick={() => setIsOpen(false)}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-brand-surface hover:text-brand-brown transition-colors"
+                >
+                  {link.label}
+                </Link>
+
+                ))
+              }
             </div>
 
             
