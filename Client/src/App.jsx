@@ -1,6 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import AnimationPage from "./components/common/animationPage";
+import AnimationPage from "./components/common/AnimationPage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import { useEffect } from "react";
 import useAuth from "./store/authStore";
@@ -14,6 +14,7 @@ import Checkout from "./pages/Checkout";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CheckoutFailed from "./pages/CheckoutFailed";
 import OurStory from "./pages/OurStory";
+import AdminProducts from "./features/admin/pages/AdminProducts";
 function App() {
   const location = useLocation();
   const { checkAuth, isCheckingAuth } = useAuth();
@@ -100,6 +101,16 @@ function App() {
                 <OurStory /> 
             </AnimationPage>
           } />
+          <Route
+            path="admin/products"
+            element={
+              <AnimationPage>
+                <ProtectedRoute>
+                  <AdminProducts />
+                </ProtectedRoute>
+              </AnimationPage>
+            }
+          />
           <Route
             path="*"
             element={

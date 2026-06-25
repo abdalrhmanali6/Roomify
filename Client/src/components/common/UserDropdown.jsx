@@ -49,6 +49,15 @@ const UserDropdown = () => {
 
             
             <div className="py-1">
+              {user?.role === "admin" && (
+                <Link
+                  to="/admin/products"
+                  onClick={() => setIsOpen(false)}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-brand-surface hover:text-brand-brown transition-colors"
+                >
+                  Admin Products
+                </Link>
+              )}
               <Link 
                 to="/profile" 
                 onClick={() => setIsOpen(false)}
