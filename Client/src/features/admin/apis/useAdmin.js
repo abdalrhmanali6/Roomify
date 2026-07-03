@@ -1,10 +1,6 @@
-import {useQuery} from "@tanstack/react-query"
-import { getDashboard } from "./AdminApis"
+import useFetchQuery from "../../../hooks/useFetchQuery"
 
 
 export const useDashboard=()=>{
-    return useQuery({
-        queryKey:["dashboard"],
-        queryFn:getDashboard
-    })
+    return useFetchQuery("/admin/dashboard", ["dashboard"])
 }
