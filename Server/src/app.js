@@ -26,6 +26,14 @@ const allowedOrigins = [
     ]),
 ].filter(Boolean)
 
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
 
 app.post('/order/webhook', express.raw({ type: 'application/json' }), stripeWebhook);
 
@@ -73,4 +81,11 @@ const startServer=async()=>{
     })
 }
 
-startServer()
+if (require.main === module) {
+    startServer().catch((error) => {
+        console.error(error);
+        process.exit(1);
+    })
+}
+
+module.exports = app

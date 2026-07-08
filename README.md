@@ -420,7 +420,12 @@ Use the generated webhook secret as `STRIPE_WEBHOOK_SECRET`.
 
 ## Deployment
 
-Roomify is ready for split deployment: one hosted frontend and one hosted backend.
+Roomify can be deployed to Vercel as two separate projects:
+
+- `Client` as the Vite frontend.
+- `Server` as a Vercel Node.js serverless API.
+
+Deploy the backend first, then use the backend URL in the frontend environment variables.
 
 ### Frontend deployment
 
@@ -443,9 +448,28 @@ Required frontend env:
 VITE_API_URL=https://your-api-domain.example/
 ```
 
-### Backend deployment
+### Backend deployment on Vercel
 
-Start command:
+Create another Vercel project from the same repository and set:
+
+```text
+Root Directory: Server
+Framework Preset: Other
+Build Command: leave empty
+Output Directory: leave empty
+Install Command: npm install
+```
+
+The backend includes:
+
+```text
+Server/api/index.js
+Server/vercel.json
+```
+
+Those files route every backend request through the Express app as a Vercel serverless function.
+
+For local development or non-serverless hosting, the normal start command still works:
 
 ```bash
 npm install
@@ -459,6 +483,19 @@ NODE_ENV=production
 FRONTEND_URL=https://your-frontend-domain.example
 BACKEND_URL=https://your-api-domain.example
 GOOGLE_CALLBACK_URL=https://your-api-domain.example/auth/google/callback
+```
+
+After deployment, your backend URL will look like:
+
+```text
+https://your-roomify-api.vercel.app
+```
+
+Use that URL in:
+
+```bash
+BACKEND_URL=https://your-roomify-api.vercel.app
+GOOGLE_CALLBACK_URL=https://your-roomify-api.vercel.app/auth/google/callback
 ```
 
 ### Deployment checklist

@@ -1,9 +1,23 @@
 const Cart = require("../model/cartSchema");
 const Order = require("../model/orderSchema");
 const Product = require("../model/productSchema");
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const createStripe = require("stripe");
 const mongoose = require("mongoose");
 const { buildFrontendUrl } = require("../config/urls");
+
+let stripeClient;
+
+const getStripe = () => {
+  if (!stripeClient) {
+    if (!process.env.STRIPE_SECRET_KEY) {
+      throw new Error("STRIPE_SECRET_KEY environment variable is required");
+    }
+
+    stripeClient = createStripe(process.env.STRIPE_SECRET_KEY);
+  }
+
+  return stripeClient;
+};
 
 const createPaymentSession = async (req, res) => {
   const session = await mongoose.startSession();
@@ -71,7 +85,7 @@ const createPaymentSession = async (req, res) => {
     }], { session });
 
 
-    const stripeSession = await stripe.checkout.sessions.create({
+    const stripeSession = await getStripe().checkout.sessions.create({
       payment_method_types: ["card"],
       line_items,
       mode: "payment",
@@ -108,7 +122,7 @@ const stripeWebhook = async (req, res) => {
     let event;
 
     try {
-        event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+        event = getStripe().webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
     } catch (err) {
         console.error(`❌ Stripe Webhook Signature Verification Failed: ${err.message}`);
         return res.status(400).send(`Webhook Error: ${err.message}`);
