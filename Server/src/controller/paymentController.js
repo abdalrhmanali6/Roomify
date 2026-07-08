@@ -3,6 +3,7 @@ const Order = require("../model/orderSchema");
 const Product = require("../model/productSchema");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const mongoose = require("mongoose");
+const { buildFrontendUrl } = require("../config/urls");
 
 const createPaymentSession = async (req, res) => {
   const session = await mongoose.startSession();
@@ -74,8 +75,8 @@ const createPaymentSession = async (req, res) => {
       payment_method_types: ["card"],
       line_items,
       mode: "payment",
-      success_url: `${process.env.FrontEND_URL}/checkout/success?orderId=${order[0]._id}`,
-      cancel_url: `${process.env.FrontEND_URL}/checkout/cancel?orderId=${order[0]._id}`,
+      success_url: buildFrontendUrl(`/checkout/success?orderId=${order[0]._id}`),
+      cancel_url: buildFrontendUrl(`/checkout/cancel?orderId=${order[0]._id}`),
       expires_at: Math.floor(Date.now() / 1000) + (30 * 60),
       metadata: {
         orderId: order[0]._id.toString(),

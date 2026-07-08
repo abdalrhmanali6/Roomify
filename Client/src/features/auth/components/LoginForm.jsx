@@ -10,6 +10,7 @@ import Button from "../../../components/common/Button";
 import UpdateMessage from "../../../components/common/UpdateMessage";
 import { useNavigate } from "react-router-dom";
 import ForgotPasswordForm from "./ForgotPasswordForm";
+import { buildApiUrl } from "../../../utils/axios";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -41,7 +42,7 @@ const LoginForm = () => {
   };
 
   const handleClick = () => {
-    window.location.href = "http://localhost:4000/auth/google";
+    window.location.href = buildApiUrl("/auth/google");
   };
 
   const goToSignUp = () => {

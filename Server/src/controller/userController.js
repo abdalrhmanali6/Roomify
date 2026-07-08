@@ -4,12 +4,7 @@ const Product = require("../model/productSchema");
 const Order = require("../model/orderSchema");
 const Cart = require("../model/cartSchema");
 const mongoose = require("mongoose");
-
-const cookieOptions = {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "strict",
-};
+const cookieOptions = require("../utils/cookieOptions");
 
 const getUserData = async (req, res) => {
   try {
