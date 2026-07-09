@@ -61,6 +61,7 @@ const Customers = () => {
     );
   }
 
+  console.log(customers)
   return (
     <div className="min-h-screen bg-linear-to-br from-brand-cream/50 via-white to-brand-cream/30 p-4 md:p-8">
       {/* Header Section */}
@@ -70,7 +71,7 @@ const Customers = () => {
         
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-brand-charcoal to-gray-600 tracking-tight">
+            <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-linear-to-br from-brand-charcoal to-gray-600 tracking-tight">
               Customers Directory
             </h1>
             <p className="mt-2 text-brand-text/80 flex items-center gap-2">
@@ -123,9 +124,9 @@ const Customers = () => {
               >
                 <summary className="grid cursor-pointer gap-6 px-6 py-5 md:grid-cols-[2fr_1.5fr_1fr_1fr_auto] md:items-center relative z-10 transition-colors group-hover:bg-gray-50/50">
                   <div className="flex items-center gap-4">
-                    <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-linear-to-br from-primary/80 to-primary/40 text-lg font-bold text-white shadow-inner">
+                    <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-linear-to-br from-primary/80 to-primary/40 text-lg font-bold text-white shadow-inner" >
                       {customer.avatar ? (
-                        <img src={customer.avatar} alt="avatar" className="h-full w-full rounded-2xl object-cover" />
+                        <img src={customer.avatar} alt="avatar" className="h-full w-full rounded-2xl object-cover" referrerPolicy="no-referrer" />
                       ) : (
                         initials
                       )}
