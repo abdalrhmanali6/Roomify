@@ -19,6 +19,8 @@ const refreshToken = async (req, res) => {
       process.env.JWT_REFRESH_SECRET,
     );
 
+   
+
     const user = await User.findOne({
       _id: decode.id,
       refreshToken: currentRefreshToken,
@@ -51,7 +53,7 @@ const refreshToken = async (req, res) => {
         isDeleted: { $ne: true },
       },
       { $inc: { tokenVersion: 1 } },
-      { new: true }        
+      { returnDocument: "after" }        
     );
 
     if (!updatedUser) {

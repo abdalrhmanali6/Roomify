@@ -1,7 +1,7 @@
 import { UserRound } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import UserDropdown from "../../../components/common/UserDropdown";
+import UserDropdown from "../../../components/UserDropdown";
 import useAuth from "../../../store/authStore";
 
 const pageTitles = [
@@ -23,7 +23,7 @@ const DeliveryNavbar = () => {
   }, [location.pathname]);
 
   return (
-    <header className="flex min-h-20 items-center justify-between border-b border-surface-variant bg-white px-6 shadow-sm lg:px-8">
+    <header className="fixed right-0 left-0  lg:left-64 flex min-h-20 items-center justify-between border-b border-surface-variant bg-white px-6 shadow-sm lg:px-8">
       <div className="ml-10 lg:ml-0">
         <p className="text-xs font-semibold uppercase text-outline">
           Delivery
