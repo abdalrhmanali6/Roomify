@@ -11,9 +11,10 @@ router.post("/logout",logout)
 router.get("/google", (req, res, next) => {
   const host = req.headers["x-forwarded-host"] || req.headers.host;
   const protocol = req.headers["x-forwarded-proto"] || "http";
-  const callbackURL = host.includes("localhost")
-    ? `${protocol}://${host}/auth/google/callback`
-    : `${protocol}://${host}/api/auth/google/callback`;
+  const isFrontendDomain = !host.includes("roomifybackend-rho") && !host.includes("localhost");
+  const callbackURL = isFrontendDomain
+    ? `${protocol}://${host}/api/auth/google/callback`
+    : `${protocol}://${host}/auth/google/callback`;
 
   passport.authenticate("google", {
     scope: ["profile", "email"],
@@ -24,9 +25,10 @@ router.get("/google", (req, res, next) => {
 router.get("/google/callback", (req, res, next) => {
   const host = req.headers["x-forwarded-host"] || req.headers.host;
   const protocol = req.headers["x-forwarded-proto"] || "http";
-  const callbackURL = host.includes("localhost")
-    ? `${protocol}://${host}/auth/google/callback`
-    : `${protocol}://${host}/api/auth/google/callback`;
+  const isFrontendDomain = !host.includes("roomifybackend-rho") && !host.includes("localhost");
+  const callbackURL = isFrontendDomain
+    ? `${protocol}://${host}/api/auth/google/callback`
+    : `${protocol}://${host}/auth/google/callback`;
 
   passport.authenticate("google", {
     session: false,
