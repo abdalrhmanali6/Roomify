@@ -43,7 +43,6 @@ const RegisterForm = () => {
 
     delete backendData.terms;
     delete backendData.confirmPassword;
-    console.log("Submitting data:", backendData);
     mutate(backendData, {
       onError: (error) => {
         if (error.message === "User already exists") {
@@ -52,7 +51,6 @@ const RegisterForm = () => {
             message: "This email is already exists. Try signing in.",
           });
         } else {
-          console.log(error);
           setError("root", {
             type: "server",
             message: "Something went wrong. Please try again.",
@@ -60,7 +58,6 @@ const RegisterForm = () => {
         }
       },
       onSuccess: (data) => {
-        console.log("Registration successful! Response data:", data);
         login(data?.data);
         openPopUp("verifyEmail")
       },

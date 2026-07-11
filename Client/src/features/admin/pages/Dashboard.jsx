@@ -1,5 +1,5 @@
 import { useDashboard } from "../apis/useAdmin";
-import Loading from "../../../components/common/Loading";
+import Loading from "../../../components/Loading";
 import KPISDashboard from "../components/Dashboard/KPISDashboard";
 import ChartsDashboard from "../components/Dashboard/ChartsDashboard";
 
@@ -18,7 +18,6 @@ const Dashboard = () => {
   }
   const Charts=data.Charts
   const KPIS = data.KPIS;
-  console.log(Charts);
   
   return (
     <div className="py-2 px-3 flex flex-col gap-8">

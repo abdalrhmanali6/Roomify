@@ -61,9 +61,11 @@ const login = async (req,res) => {
     const {accessToken,refreshToken}=generateTokens(user)
 
 
-
-    user.refreshToken = refreshToken;
-    await user.save({ validateBeforeSave: false });
+    const CookieOptions={
+        httpOnly:true,
+        secure:process.env.NODE_ENV==="production",
+        sameSite:"strict",
+    }
 
 
     res.cookie("accessToken",accessToken,{

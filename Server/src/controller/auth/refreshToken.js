@@ -19,10 +19,11 @@ const refreshToken = async (req, res) => {
       process.env.JWT_REFRESH_SECRET,
     );
 
+   
+
     const user = await User.findOne({
       _id: decode.id,
-      refreshToken: currentRefreshToken,
-     isDeleted: { $ne: true },
+      isDeleted: { $ne: true },
     });
 
     if (!user) {
@@ -46,24 +47,20 @@ const refreshToken = async (req, res) => {
     const updatedUser = await User.findOneAndUpdate(
       {
         _id: user._id,
-        refreshToken: currentRefreshToken,
         tokenVersion: user.tokenVersion,
         isDeleted: { $ne: true },
       },
       { $inc: { tokenVersion: 1 } },
-      { new: true }        
+      { returnDocument: "after" }        
     );
 
     if (!updatedUser) {
        return res.status(409).json({ message: "Concurrent request, please try again." });
-    }
+     }
 
 
 
     const { accessToken, refreshToken:newRefreshToken } = generateTokens(updatedUser);
-
-    updatedUser.refreshToken = newRefreshToken;
-    await updatedUser.save({ validateBeforeSave: false });
 
     res.cookie("accessToken", accessToken, {
       ...cookieOptions,

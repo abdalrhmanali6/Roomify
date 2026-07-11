@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import Button from '../../../components/common/Button';
-import QuantityButton from '../../../components/common/QuantityButton';
+import Button from '../../../components/Button';
+import QuantityButton from '../../../components/QuantityButton';
 import { ShoppingCart } from 'lucide-react';
 import useAuth from "../../../store/authStore"
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAddToCart } from '../../cart/apis/useCart';
 import useRequireVerified from '../../../hooks/useRequireVerified';
 
-const ProductActions = () => {
-  const { id } = useParams();
+const ProductActions = ({stock, product}) => {
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
 
@@ -27,12 +26,12 @@ const ProductActions = () => {
       return navigate("/login");
     }
 
-    
+   
 
 
     if (isVerified()) {
     
-      mutate({ productId: id, quantity });
+      mutate({ product, quantity });
     }
   };
 
@@ -47,9 +46,9 @@ const ProductActions = () => {
       <Button 
         className="flex-1 flex items-center justify-center gap-2" 
         onClick={onClick}
-        disabled={isPending} 
+        disabled={isPending||quantity>stock} 
       >
-        <ShoppingCart/> {isPending ? "Adding..." : "Add to Cart"}
+        <ShoppingCart/> {isPending ? "Adding..." :quantity>stock? "Out of the Stock":"Add to Cart"}
       </Button>
     </div>
   );

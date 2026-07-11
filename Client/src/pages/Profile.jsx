@@ -1,10 +1,10 @@
-import Loading from "../components/common/Loading";
+import Loading from "../components/Loading";
 import useAuth from "../store/authStore";
 import ProfileSideBar from "../features/profile/ProfileSideBar";
 import PersonalInformation from "../features/profile/PersonalInformation";
 import ShippingAddress from "../features/profile/ShippingAddress";
 import Security from "../features/profile/Security";
-import CancelPopUp from "../components/common/CancelPopUp";
+import CancelPopUp from "../components/CancelPopUp";
 import { useState } from "react";
 import api from "../utils/axios";
 import toast from "react-hot-toast";
@@ -51,6 +51,8 @@ const Profile = () => {
     day: "numeric",
     year: "numeric",
   });
+
+  const isLocalUser = user.providers.includes("local");
   return (
     <div className="max-w-container-max mx-auto px-6 py-12">
       <div className="flex flex-col md:flex-row gap-gutter">
@@ -72,7 +74,7 @@ const Profile = () => {
             city={user.address?.city}
             isVerified={isVerified}
           />
-          <Security isVerified={isVerified}/>
+          <Security isVerified={isVerified} isLocalUser={isLocalUser}/>
           <section
             className="bg-surface-container/50 p-8 rounded-xl border border-stone-200/40"
             id="status"
@@ -80,7 +82,7 @@ const Profile = () => {
             <h2 className="font-headline-sm text-headline-sm text-on-surface mb-6">
               Account Information
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="p-4 bg-white rounded-xl custom-shadow">
                 <p className="text-xs font-semibold text-outline uppercase tracking-widest mb-1">
                   Email Address
