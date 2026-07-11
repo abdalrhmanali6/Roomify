@@ -3,7 +3,7 @@ const http = require("http");
 const https = require("https");
 
 module.exports = (req, res) => {
-  const backendUrl = process.env.BACKEND_URL || "https://roomify-backend.onrender.com";
+  const backendUrl = process.env.BACKEND_URL || "https://roomifybackend-rho.vercel.app";
   const parsedTarget = url.parse(backendUrl);
 
   const targetPath = req.url.replace(/^\/api/, "") || "/";
@@ -17,6 +17,8 @@ module.exports = (req, res) => {
     headers: {
       ...req.headers,
       host: parsedTarget.hostname,
+      "x-forwarded-host": req.headers.host,
+      "x-forwarded-proto": req.headers["x-forwarded-proto"] || "https",
     },
   };
 
