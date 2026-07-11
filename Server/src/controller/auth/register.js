@@ -53,8 +53,6 @@ const setAuthCookies = (res, accessToken, refreshToken) => {
 const loginUnverifiedUser = async (user, res) => {
   const { accessToken, refreshToken } = generateTokens(user);
 
-  user.refreshToken = refreshToken;
-  await user.save({ validateBeforeSave: false });
   setAuthCookies(res, accessToken, refreshToken);
 };
 
