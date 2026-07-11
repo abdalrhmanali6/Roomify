@@ -4,7 +4,11 @@ export const API_BASE_URL =
   import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:4000/" : "/api/");
 
 export const buildApiUrl = (path) => {
-  return new URL(path.replace(/^\/+/, ""), API_BASE_URL).toString();
+  const origin = typeof window !== "undefined" ? window.location.origin : "";
+  const base = API_BASE_URL.startsWith("http")
+    ? API_BASE_URL
+    : origin + (API_BASE_URL.startsWith("/") ? API_BASE_URL : "/" + API_BASE_URL);
+  return new URL(path.replace(/^\/+/, ""), base).toString();
 };
 
 const api = axios.create({
