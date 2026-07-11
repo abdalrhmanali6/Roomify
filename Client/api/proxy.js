@@ -1,8 +1,8 @@
-const url = require("url");
-const http = require("http");
-const https = require("https");
+import url from "url";
+import http from "http";
+import https from "https";
 
-module.exports = (req, res) => {
+export default (req, res) => {
   const backendUrl = process.env.BACKEND_URL || "https://roomifybackend-rho.vercel.app";
   const parsedTarget = url.parse(backendUrl);
 
